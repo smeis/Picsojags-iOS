@@ -23,7 +23,7 @@ class PicsojagsPhotoBackendTests: XCTestCase {
     func test500PXURLContainsAPIKey() {
         let apiKey = "API_KEY"
         let px = PhotoBackend500px(apiKey: apiKey)
-        XCTAssertTrue(px.searchURL(keywords: "test", page: 0).path.contains(apiKey))
+        XCTAssertTrue(px.searchURL(keywords: "test", page: 0).path.contains("consumer_key=\(apiKey)"))
     }
     
 }

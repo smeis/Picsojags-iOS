@@ -25,9 +25,11 @@ struct PhotoBackend500px: PhotoBackend {
     
     // MARK: Endpoints
     
-    func searchURL(keywords: String, page: Int) -> URL {
+    func searchURL(keywords: String, page: Int = 1) -> URL {
         let searchURL = baseURL.appendingPathComponent("photos/search")
-        return searchURL
+        let parameters = ["term=\(keywords)", "page=\(page)", "consumer_key=\(self.apiKey)"]
+        let parameterString = parameters.joined(separator: "&")
+        return searchURL.appendingPathComponent("?\(parameterString)")
     }
     
 }
