@@ -20,10 +20,24 @@ class PicsojagsPhotoBackendTests: XCTestCase {
         super.tearDown()
     }
     
-    func test500PXURLContainsAPIKey() {
+    func test500pxURLContainsAPIKey() {
         let apiKey = "API_KEY"
         let px = PhotoBackend500px(apiKey: apiKey)
-        XCTAssertTrue(px.searchURL(keywords: "test", page: 0).path.contains("consumer_key=\(apiKey)"))
+        guard let searchURL = px.searchURL(forKeywords: "test", page: 0) else {
+            XCTAssertTrue(false)
+            return
+        }
+        XCTAssertTrue(searchURL.absoluteString.contains("consumer_key=\(apiKey)"))
+    }
+    
+    func test500pxURLEscapesKeywords() {
+        let apiKey = "API_KEY"
+        let px = PhotoBackend500px(apiKey: apiKey)
+        guard let searchURL = px.searchURL(forKeywords: "testing?spaces=blah&yo=hello! spaces", page: 0) else {
+            XCTAssertTrue(false)
+            return
+        }
+        XCTAssertTrue(searchURL.absoluteString.contains("testing%3Fspaces%3Dblah%26yo%3Dhello%21%20spaces"))
     }
     
 }

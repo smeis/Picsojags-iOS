@@ -23,6 +23,9 @@ class GridViewController: UIViewController {
             if let apiKey = dict["500px"] as? String {
                 let photoBackend = PhotoBackend500px(apiKey: apiKey)
                 self.photoStore = PhotoStore(backend: photoBackend)
+                self.photoStore?.fetchPhotos(page: 0, complete: { (photos) in
+                    print("Photos: \(photos)")
+                })
             }
         }
     }

@@ -7,12 +7,38 @@
 //
 
 import UIKit
+import SwiftyJSON
+
+// MARK: - String extension for parameter escaping
+
+extension String {
+    
+    var RFC3986UnreservedEncoded:String {
+        let unreservedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~"
+        let unreservedCharsSet: CharacterSet = CharacterSet(charactersIn: unreservedChars)
+        let encodedString: String = self.addingPercentEncoding(withAllowedCharacters: unreservedCharsSet)!
+        return encodedString
+    }
+}
+
+// MARK: - Protocol and struct
 
 protocol PhotoBackend {
     var apiKey: String { get }
     var baseURL: URL { get }
-    func searchURL(keywords: String, page: Int) -> URL
+    var urlSessionConfiguration: URLSessionConfiguration { get } // Allow for special configurations, usually auth related
+    func searchURL(forKeywords keywords: String, page: Int) -> URL?
+    func parse(fromJSON json: JSON) -> BackendResponse
 }
+
+struct BackendResponse {
+    fileprivate(set) var success: Bool
+    fileprivate(set) var page: Int
+    fileprivate(set) var pages: Int
+    fileprivate(set) var photos: [Photo]
+}
+
+// MARK: - Backends
 
 struct PhotoBackend500px: PhotoBackend {
 
@@ -23,13 +49,30 @@ struct PhotoBackend500px: PhotoBackend {
         self.apiKey = apiKey
     }
     
-    // MARK: Endpoints
+    // MARK: - URL Session configuration
     
-    func searchURL(keywords: String, page: Int = 1) -> URL {
-        let searchURL = baseURL.appendingPathComponent("photos/search")
-        let parameters = ["term=\(keywords)", "page=\(page)", "consumer_key=\(self.apiKey)"]
+    var urlSessionConfiguration: URLSessionConfiguration {
+        return URLSessionConfiguration.default // No special configuration, consumer key is set in URL
+    }
+    
+    // MARK: - Endpoints
+    
+    func searchURL(forKeywords keywords: String, page: Int = 1) -> URL? {
+        
+        // Escape keywords
+        let escapedKeywords = keywords.RFC3986UnreservedEncoded
+
+        // Compose URL, maybe use NSURLComponents
+        let searchURL = self.baseURL.appendingPathComponent("photos/search")
+        let parameters = ["term=\(escapedKeywords)", "page=\(page)", "consumer_key=\(self.apiKey)"]
         let parameterString = parameters.joined(separator: "&")
-        return searchURL.appendingPathComponent("?\(parameterString)")
+        return URL(string: "\(searchURL.absoluteString)?\(parameterString)")
+    }
+    
+    // MARK: - parameterString
+    
+    func parse(fromJSON json: JSON) -> BackendResponse {
+        return BackendResponse(success: true, page: 1, pages: 100, photos: [])
     }
     
 }
