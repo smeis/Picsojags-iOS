@@ -21,10 +21,10 @@ class GridViewController: UIViewController {
         if let path = Bundle.main.path(forResource: "PhotoServices", ofType: "plist"), let dict = NSDictionary(contentsOfFile: path) as? [String: AnyObject] {
             // Use the 500px backend
             if let apiKey = dict["500px"] as? String {
-                let photoBackend = PhotoBackend500px(apiKey: apiKey)
+                let photoBackend = PhotoBackend500px(withAPIKey: apiKey)
                 self.photoStore = PhotoStore(backend: photoBackend)
-                self.photoStore?.fetchPhotos(page: 0, complete: { (photos) in
-                    print("Photos: \(photos)")
+                self.photoStore?.fetchPhotos(page: 0, complete: { (response) in
+                    print("Photos: \(response)")
                 })
             }
         }

@@ -21,6 +21,9 @@
 		B528EEFE1E59E38E00D04B94 /* PicsojagsPhotoBackendTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B528EEFD1E59E38E00D04B94 /* PicsojagsPhotoBackendTests.swift */; };
 		B528EF011E59E7EE00D04B94 /* GridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B528EF001E59E7EE00D04B94 /* GridViewController.swift */; };
 		B528EF021E59F0D500D04B94 /* PhotoBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = B528EEE41E59C15500D04B94 /* PhotoBackend.swift */; };
+		B528EF041E5A090E00D04B94 /* PicsojagsPhotoBackendParsingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B528EF031E5A090E00D04B94 /* PicsojagsPhotoBackendParsingTests.swift */; };
+		B528EF071E5A0AC600D04B94 /* 500px.json in Resources */ = {isa = PBXBuildFile; fileRef = B528EF061E5A0AC600D04B94 /* 500px.json */; };
+		B5E14FCD1E5A0CC100B26238 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B528EEEB1E59C43800D04B94 /* Photo.swift */; };
 		CBF050D6F1CB6B8231BB80E3 /* Pods_Picsojags.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDF8D666635B851179737CAA /* Pods_Picsojags.framework */; };
 /* End PBXBuildFile section */
 
@@ -65,6 +68,8 @@
 		B528EEFB1E59DDB700D04B94 /* PhotoServices.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PhotoServices.plist; path = Config/PhotoServices.plist; sourceTree = "<group>"; };
 		B528EEFD1E59E38E00D04B94 /* PicsojagsPhotoBackendTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PicsojagsPhotoBackendTests.swift; sourceTree = "<group>"; };
 		B528EF001E59E7EE00D04B94 /* GridViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GridViewController.swift; path = UI/GridViewController.swift; sourceTree = "<group>"; };
+		B528EF031E5A090E00D04B94 /* PicsojagsPhotoBackendParsingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PicsojagsPhotoBackendParsingTests.swift; sourceTree = "<group>"; };
+		B528EF061E5A0AC600D04B94 /* 500px.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = 500px.json; path = Mocks/500px.json; sourceTree = "<group>"; };
 		FDF8D666635B851179737CAA /* Pods_Picsojags.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Picsojags.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -146,9 +151,11 @@
 		B528EEC11E599ACF00D04B94 /* PicsojagsTests */ = {
 			isa = PBXGroup;
 			children = (
+				B528EF051E5A0ABD00D04B94 /* Mocks */,
 				B528EEC41E599ACF00D04B94 /* Info.plist */,
 				B528EEC21E599ACF00D04B94 /* PicsojagsTests.swift */,
 				B528EEFD1E59E38E00D04B94 /* PicsojagsPhotoBackendTests.swift */,
+				B528EF031E5A090E00D04B94 /* PicsojagsPhotoBackendParsingTests.swift */,
 			);
 			path = PicsojagsTests;
 			sourceTree = "<group>";
@@ -210,6 +217,14 @@
 			children = (
 			);
 			name = "API Tools";
+			sourceTree = "<group>";
+		};
+		B528EF051E5A0ABD00D04B94 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				B528EF061E5A0AC600D04B94 /* 500px.json */,
+			);
+			name = Mocks;
 			sourceTree = "<group>";
 		};
 		D4DA09F5C7B050C2E6E1F8FB /* Frameworks */ = {
@@ -350,6 +365,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B528EF071E5A0AC600D04B94 /* 500px.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -502,7 +518,9 @@
 			files = (
 				B528EF021E59F0D500D04B94 /* PhotoBackend.swift in Sources */,
 				B528EEFE1E59E38E00D04B94 /* PicsojagsPhotoBackendTests.swift in Sources */,
+				B528EF041E5A090E00D04B94 /* PicsojagsPhotoBackendParsingTests.swift in Sources */,
 				B528EEC31E599ACF00D04B94 /* PicsojagsTests.swift in Sources */,
+				B5E14FCD1E5A0CC100B26238 /* Photo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

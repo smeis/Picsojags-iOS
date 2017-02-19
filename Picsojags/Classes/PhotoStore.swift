@@ -21,7 +21,7 @@ class PhotoStore {
     
     // MARK: - Making API calls
     
-    func fetchPhotos(page: Int, complete: @escaping (_ photos: [Photo]) -> ()) {
+    func fetchPhotos(page: Int, complete: @escaping (_ response: PhotoBackendResponse) -> ()) {
         
         if let searchURL = self.backend.searchURL(forKeywords: "jaguar car", page: page) {
             // Create data task and run it
@@ -29,9 +29,9 @@ class PhotoStore {
                 
                 // Return early if response is empty
                 if response == nil || error != nil {
-                    // Execute on main thread to allow for UI updates
-                    OperationQueue.main.addOperation({
-                        complete([])
+                    let response = PhotoBackendResponse(success: false, page: 0, pages: 0, photos: [])
+                    OperationQueue.main.addOperation({ // Allow UI updates
+                        complete(response)
                     })
                     return
                 }
@@ -46,14 +46,18 @@ class PhotoStore {
                         let json = JSON(data: jsonData)
                         
                         // Parse JSON
-                        
-                        
+                        let response = self.backend.parse(fromJSON: json)
+                        OperationQueue.main.addOperation({ // Allow UI updates
+                            complete(response)
+                        })
                     }
-                default: break
+                default:
+                    // TODO: Handle error
+                    break
                 }
             }.resume() // Execute task
         } else {
-            // Handle error
+            // TODO: Handle error
         }
         
     }

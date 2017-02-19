@@ -22,7 +22,7 @@ class PicsojagsPhotoBackendTests: XCTestCase {
     
     func test500pxURLContainsAPIKey() {
         let apiKey = "API_KEY"
-        let px = PhotoBackend500px(apiKey: apiKey)
+        let px = PhotoBackend500px(withAPIKey: apiKey)
         guard let searchURL = px.searchURL(forKeywords: "test", page: 0) else {
             XCTAssertTrue(false)
             return
@@ -32,7 +32,7 @@ class PicsojagsPhotoBackendTests: XCTestCase {
     
     func test500pxURLEscapesKeywords() {
         let apiKey = "API_KEY"
-        let px = PhotoBackend500px(apiKey: apiKey)
+        let px = PhotoBackend500px(withAPIKey: apiKey)
         guard let searchURL = px.searchURL(forKeywords: "testing?spaces=blah&yo=hello! spaces", page: 0) else {
             XCTAssertTrue(false)
             return

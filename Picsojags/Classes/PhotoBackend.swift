@@ -27,11 +27,12 @@ protocol PhotoBackend {
     var apiKey: String { get }
     var baseURL: URL { get }
     var urlSessionConfiguration: URLSessionConfiguration { get } // Allow for special configurations, usually auth related
+    init(withAPIKey apiKey: String)
     func searchURL(forKeywords keywords: String, page: Int) -> URL?
-    func parse(fromJSON json: JSON) -> BackendResponse
+    func parse(fromJSON json: JSON) -> PhotoBackendResponse
 }
 
-struct BackendResponse {
+struct PhotoBackendResponse {
     fileprivate(set) var success: Bool
     fileprivate(set) var page: Int
     fileprivate(set) var pages: Int
@@ -45,7 +46,7 @@ struct PhotoBackend500px: PhotoBackend {
     fileprivate(set) var apiKey: String
     let baseURL: URL = URL(string: "https://api.500px.com/v1")!
     
-    init(apiKey: String) {
+    init(withAPIKey apiKey: String) {
         self.apiKey = apiKey
     }
     
@@ -71,8 +72,8 @@ struct PhotoBackend500px: PhotoBackend {
     
     // MARK: - parameterString
     
-    func parse(fromJSON json: JSON) -> BackendResponse {
-        return BackendResponse(success: true, page: 1, pages: 100, photos: [])
+    func parse(fromJSON json: JSON) -> PhotoBackendResponse {
+        return PhotoBackendResponse(success: true, page: 1, pages: 100, photos: [])
     }
     
 }
