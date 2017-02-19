@@ -40,6 +40,7 @@ class PicsojagsPhotoBackendParsingTests: XCTestCase {
         let response = px.parse(fromJSON: self.json)
         // Create set of photos
         let photos: [Photo] = []
+        XCTAssertTrue(photos.count > 0)
         for (i, photo) in response.photos.enumerated() {
             // Compare photos
             let refPhoto = photos[i]
