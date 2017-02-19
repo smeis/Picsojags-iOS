@@ -10,7 +10,6 @@ import UIKit
 
 class PhotoStore: NSObject {
 
-    fileprivate(set) var photos: [Photo] = []
     fileprivate(set) var backend: PhotoBackend!
     
     init(backend: PhotoBackend) {

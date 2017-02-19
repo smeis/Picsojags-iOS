@@ -13,22 +13,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
-    var photoStore: PhotoStore?
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        
-        // WARN: This allows me to hide the API key from git and upload this project to GitHub, not suited for real world apps
-        if let path = Bundle.main.path(forResource: "PhotoServices", ofType: "plist"), let dict = NSDictionary(contentsOfFile: path) as? [String: AnyObject] {
-            // Use the 500px backend
-            if let apiKey = dict["500px"] as? String {
-                let photoBackend = PhotoBackend500px(apiKey: apiKey)
-                self.photoStore = PhotoStore(backend: photoBackend)
-                return true
-            }
-        }
-        print("Failed to initialize with a photo backend")
-        return false
+        return true
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
