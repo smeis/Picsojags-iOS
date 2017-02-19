@@ -19,7 +19,7 @@ class PicsojagsPhotoBackendParsingTests: XCTestCase {
         let testBundle = Bundle(for: type(of: self))
         let fileURL = testBundle.url(forResource: "500px", withExtension: "json")
         let jsonData = try! Data(contentsOf: fileURL!)
-        self.json = JSON(jsonData)
+        self.json = JSON(data: jsonData)
     }
     
     override func tearDown() {
@@ -40,7 +40,7 @@ class PicsojagsPhotoBackendParsingTests: XCTestCase {
         let response = px.parse(fromJSON: self.json)
         // Create set of photos
         let photos: [Photo] = []
-        XCTAssertTrue(photos.count > 0)
+        XCTAssertTrue(photos.count == 5) // Mock json contains 5 photos
         for (i, photo) in response.photos.enumerated() {
             // Compare photos
             let refPhoto = photos[i]

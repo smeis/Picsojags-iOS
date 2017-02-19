@@ -65,7 +65,7 @@ struct PhotoBackend500px: PhotoBackend {
 
         // Compose URL, maybe use NSURLComponents
         let searchURL = self.baseURL.appendingPathComponent("photos/search")
-        let parameters = ["term=\(escapedKeywords)", "page=\(page)", "consumer_key=\(self.apiKey)"]
+        let parameters = ["term=\(escapedKeywords)", "page=\(page)", "consumer_key=\(self.apiKey)", "image_size=3,6"]
         let parameterString = parameters.joined(separator: "&")
         return URL(string: "\(searchURL.absoluteString)?\(parameterString)")
     }
@@ -73,7 +73,9 @@ struct PhotoBackend500px: PhotoBackend {
     // MARK: - parameterString
     
     func parse(fromJSON json: JSON) -> PhotoBackendResponse {
-        return PhotoBackendResponse(success: true, page: 1, pages: 100, photos: [])
+        let page = json["current_page"].intValue
+        let pages = json["total_pages"].intValue
+        return PhotoBackendResponse(success: true, page: page, pages: pages, photos: [])
     }
     
 }
