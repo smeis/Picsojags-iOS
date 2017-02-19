@@ -10,7 +10,10 @@ import UIKit
 
 class GridViewController: UIViewController {
 
+    @IBOutlet weak var gridCollectionView: UICollectionView!
+    
     var photoStore: PhotoStore?
+    var photos: [Photo] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,8 +26,13 @@ class GridViewController: UIViewController {
             if let apiKey = dict["500px"] as? String {
                 let photoBackend = PhotoBackend500px(withAPIKey: apiKey)
                 self.photoStore = PhotoStore(backend: photoBackend)
-                self.photoStore?.fetchPhotos(page: 0, complete: { (response) in
-                    print("Photos: \(response)")
+                self.photoStore?.fetchPhotos(page: 1, complete: { (response) in
+                    guard response.success else {
+                        // TODO: Handle error
+                        return
+                    }
+                    self.photos = response.photos
+                    self.gridCollectionView.reloadData()
                 })
             }
         }
@@ -46,4 +54,23 @@ class GridViewController: UIViewController {
     }
     */
 
+}
+
+// MARK: - Data source
+
+extension GridViewController: UICollectionViewDataSource {
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+       return self.photos.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
+        return cell
+    }
+    
 }

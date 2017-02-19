@@ -120,9 +120,6 @@
 				B528EEED1E59C54400D04B94 /* UI */,
 				B528EEE21E59C07200D04B94 /* Photos */,
 				B528EEAB1E599ACF00D04B94 /* AppDelegate.swift */,
-				B528EEB11E599ACF00D04B94 /* Main.storyboard */,
-				B528EEB41E599ACF00D04B94 /* Assets.xcassets */,
-				B528EEB61E599ACF00D04B94 /* LaunchScreen.storyboard */,
 				B528EEB91E599ACF00D04B94 /* Info.plist */,
 			);
 			path = Picsojags;
@@ -162,6 +159,9 @@
 		B528EEED1E59C54400D04B94 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				B528EEB11E599ACF00D04B94 /* Main.storyboard */,
+				B528EEB41E599ACF00D04B94 /* Assets.xcassets */,
+				B528EEB61E599ACF00D04B94 /* LaunchScreen.storyboard */,
 				B528EEEE1E59C54800D04B94 /* Photos */,
 			);
 			name = UI;

@@ -18,13 +18,9 @@ Add the API keys required for the services you intend to use to ```Config/PhotoS
 
 ```
 - root
-|- Services []
-  |- item
-    |- name (e.g. 500px)
-    |- key (e.g. kjdfjhUYERHJ7435438)
-  |- item
-    |- name (e.g. Instagram)
-    |- key (e.g. kjdfjhUYERHJ7435438)
+|- Services: Dictionary 
+  |- 500px: kjdfjhUYERHJ7435438
+  |- Instagram: KJkjhdfsjHewr348z 
 ```
 
 ## Testing
