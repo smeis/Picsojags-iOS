@@ -32,11 +32,29 @@ protocol PhotoBackend {
     func parse(fromJSON json: JSON) -> PhotoBackendResponse
 }
 
-struct PhotoBackendResponse {
+struct PhotoBackendResponse: Equatable {
     fileprivate(set) var success: Bool
     fileprivate(set) var page: Int
     fileprivate(set) var pages: Int
     fileprivate(set) var photos: [Photo]
+}
+
+
+func ==(lhs: PhotoBackendResponse, rhs: PhotoBackendResponse) -> Bool {
+    if lhs.success != rhs.success { return false }
+    if lhs.page != rhs.page { return false }
+    if lhs.pages != rhs.pages { return false }
+    if lhs.photos.count != rhs.photos.count { return false }
+    // Somes down to comparing photos
+    var match = true
+    for (i, lPhoto) in lhs.photos.enumerated() {
+        let rPhoto = rhs.photos[i]
+        if lPhoto != rPhoto {
+            match = false
+            break
+        }
+    }
+    return match
 }
 
 // MARK: - Backends
@@ -75,7 +93,24 @@ struct PhotoBackend500px: PhotoBackend {
     func parse(fromJSON json: JSON) -> PhotoBackendResponse {
         let page = json["current_page"].intValue
         let pages = json["total_pages"].intValue
-        return PhotoBackendResponse(success: true, page: page, pages: pages, photos: [])
+        let photos = json["photos"].arrayValue
+        var parsedPhotos: [Photo] = []
+        for photo in photos {
+            let images = photo["images"].arrayValue
+            let small = images.first(where: { $0["size"] == 3 }) // Get thumbnail (280 x 280)
+            let large = images.first(where: { $0["size"] == 6 }) // Get larger size 1080p
+           
+            // Skip if small or large aren't available
+            guard let smallJSON = small, let largeJSON = large else {
+                break
+            }
+            // Create photo
+            if let smallURL = URL(string: smallJSON["https_url"].stringValue), let largeURL = URL(string: largeJSON["https_url"].stringValue) {
+                let parsedPhoto = Photo(lowQualityURL: smallURL, highQualityURL: largeURL)
+                parsedPhotos.append(parsedPhoto)
+            }
+        }
+        return PhotoBackendResponse(success: true, page: page, pages: pages, photos: parsedPhotos)
     }
     
 }
