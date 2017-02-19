@@ -13,7 +13,6 @@
 		B528EEB51E599ACF00D04B94 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B528EEB41E599ACF00D04B94 /* Assets.xcassets */; };
 		B528EEB81E599ACF00D04B94 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B528EEB61E599ACF00D04B94 /* LaunchScreen.storyboard */; };
 		B528EEC31E599ACF00D04B94 /* PicsojagsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B528EEC21E599ACF00D04B94 /* PicsojagsTests.swift */; };
-		B528EECE1E599ACF00D04B94 /* PicsojagsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B528EECD1E599ACF00D04B94 /* PicsojagsUITests.swift */; };
 		B528EEE51E59C15500D04B94 /* PhotoBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = B528EEE41E59C15500D04B94 /* PhotoBackend.swift */; };
 		B528EEEA1E59C41800D04B94 /* PhotoStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B528EEE91E59C41800D04B94 /* PhotoStore.swift */; };
 		B528EEEC1E59C43800D04B94 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B528EEEB1E59C43800D04B94 /* Photo.swift */; };
@@ -29,13 +28,6 @@
 
 /* Begin PBXContainerItemProxy section */
 		B528EEBF1E599ACF00D04B94 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B528EEA01E599ACF00D04B94 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B528EEA71E599ACF00D04B94;
-			remoteInfo = Picsojags;
-		};
-		B528EECA1E599ACF00D04B94 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B528EEA01E599ACF00D04B94 /* Project object */;
 			proxyType = 1;
@@ -59,9 +51,6 @@
 		B528EEBE1E599ACF00D04B94 /* PicsojagsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PicsojagsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B528EEC21E599ACF00D04B94 /* PicsojagsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PicsojagsTests.swift; sourceTree = "<group>"; };
 		B528EEC41E599ACF00D04B94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B528EEC91E599ACF00D04B94 /* PicsojagsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PicsojagsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		B528EECD1E599ACF00D04B94 /* PicsojagsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PicsojagsUITests.swift; sourceTree = "<group>"; };
-		B528EECF1E599ACF00D04B94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B528EEE41E59C15500D04B94 /* PhotoBackend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhotoBackend.swift; path = Classes/PhotoBackend.swift; sourceTree = "<group>"; };
 		B528EEE91E59C41800D04B94 /* PhotoStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhotoStore.swift; path = Classes/PhotoStore.swift; sourceTree = "<group>"; };
 		B528EEEB1E59C43800D04B94 /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Photo.swift; path = Models/Photo.swift; sourceTree = "<group>"; };
@@ -90,13 +79,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B528EEC61E599ACF00D04B94 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -117,7 +99,6 @@
 				B528EEF71E59DAF600D04B94 /* Config */,
 				B528EEAA1E599ACF00D04B94 /* Picsojags */,
 				B528EEC11E599ACF00D04B94 /* PicsojagsTests */,
-				B528EECC1E599ACF00D04B94 /* PicsojagsUITests */,
 				B528EEA91E599ACF00D04B94 /* Products */,
 				03EA437C257FB5C428290006 /* Pods */,
 				D4DA09F5C7B050C2E6E1F8FB /* Frameworks */,
@@ -129,7 +110,6 @@
 			children = (
 				B528EEA81E599ACF00D04B94 /* Picsojags.app */,
 				B528EEBE1E599ACF00D04B94 /* PicsojagsTests.xctest */,
-				B528EEC91E599ACF00D04B94 /* PicsojagsUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -158,15 +138,6 @@
 				B528EF031E5A090E00D04B94 /* PicsojagsPhotoBackendParsingTests.swift */,
 			);
 			path = PicsojagsTests;
-			sourceTree = "<group>";
-		};
-		B528EECC1E599ACF00D04B94 /* PicsojagsUITests */ = {
-			isa = PBXGroup;
-			children = (
-				B528EECD1E599ACF00D04B94 /* PicsojagsUITests.swift */,
-				B528EECF1E599ACF00D04B94 /* Info.plist */,
-			);
-			path = PicsojagsUITests;
 			sourceTree = "<group>";
 		};
 		B528EEE21E59C07200D04B94 /* Photos */ = {
@@ -282,24 +253,6 @@
 			productReference = B528EEBE1E599ACF00D04B94 /* PicsojagsTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		B528EEC81E599ACF00D04B94 /* PicsojagsUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B528EED81E599ACF00D04B94 /* Build configuration list for PBXNativeTarget "PicsojagsUITests" */;
-			buildPhases = (
-				B528EEC51E599ACF00D04B94 /* Sources */,
-				B528EEC61E599ACF00D04B94 /* Frameworks */,
-				B528EEC71E599ACF00D04B94 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				B528EECB1E599ACF00D04B94 /* PBXTargetDependency */,
-			);
-			name = PicsojagsUITests;
-			productName = PicsojagsUITests;
-			productReference = B528EEC91E599ACF00D04B94 /* PicsojagsUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -316,12 +269,6 @@
 						ProvisioningStyle = Automatic;
 					};
 					B528EEBD1E599ACF00D04B94 = {
-						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = RVZKP45394;
-						ProvisioningStyle = Automatic;
-						TestTargetID = B528EEA71E599ACF00D04B94;
-					};
-					B528EEC81E599ACF00D04B94 = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = RVZKP45394;
 						ProvisioningStyle = Automatic;
@@ -344,7 +291,6 @@
 			targets = (
 				B528EEA71E599ACF00D04B94 /* Picsojags */,
 				B528EEBD1E599ACF00D04B94 /* PicsojagsTests */,
-				B528EEC81E599ACF00D04B94 /* PicsojagsUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -366,13 +312,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B528EF071E5A0AC600D04B94 /* 500px.json in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B528EEC71E599ACF00D04B94 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -524,14 +463,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B528EEC51E599ACF00D04B94 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B528EECE1E599ACF00D04B94 /* PicsojagsUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -539,11 +470,6 @@
 			isa = PBXTargetDependency;
 			target = B528EEA71E599ACF00D04B94 /* Picsojags */;
 			targetProxy = B528EEBF1E599ACF00D04B94 /* PBXContainerItemProxy */;
-		};
-		B528EECB1E599ACF00D04B94 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B528EEA71E599ACF00D04B94 /* Picsojags */;
-			targetProxy = B528EECA1E599ACF00D04B94 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -720,34 +646,6 @@
 			};
 			name = Release;
 		};
-		B528EED91E599ACF00D04B94 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				DEVELOPMENT_TEAM = RVZKP45394;
-				INFOPLIST_FILE = PicsojagsUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.dangercove.PicsojagsUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-				TEST_TARGET_NAME = Picsojags;
-			};
-			name = Debug;
-		};
-		B528EEDA1E599ACF00D04B94 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				DEVELOPMENT_TEAM = RVZKP45394;
-				INFOPLIST_FILE = PicsojagsUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.dangercove.PicsojagsUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-				TEST_TARGET_NAME = Picsojags;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -774,15 +672,6 @@
 			buildConfigurations = (
 				B528EED61E599ACF00D04B94 /* Debug */,
 				B528EED71E599ACF00D04B94 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		B528EED81E599ACF00D04B94 /* Build configuration list for PBXNativeTarget "PicsojagsUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B528EED91E599ACF00D04B94 /* Debug */,
-				B528EEDA1E599ACF00D04B94 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

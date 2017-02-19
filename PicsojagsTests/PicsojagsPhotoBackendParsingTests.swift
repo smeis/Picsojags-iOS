@@ -11,9 +11,15 @@ import SwiftyJSON
 
 class PicsojagsPhotoBackendParsingTests: XCTestCase {
     
+    private var json: JSON!
+    
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
+        let testBundle = Bundle(for: type(of: self))
+        let fileURL = testBundle.url(forResource: "500px", withExtension: "json")
+        let jsonData = try! Data(contentsOf: fileURL!)
+        self.json = JSON(jsonData)
     }
     
     override func tearDown() {
@@ -22,26 +28,16 @@ class PicsojagsPhotoBackendParsingTests: XCTestCase {
     }
     
     func testCanParse500pxMetaData() {
-        let testBundle = Bundle(for: type(of: self))
-        let fileURL = testBundle.url(forResource: "500px", withExtension: "json")
-        let jsonData = try! Data(contentsOf: fileURL!)
-        let json = JSON(jsonData)
-        
         let px = PhotoBackend500px(withAPIKey: "blah")
-        let response = px.parse(fromJSON: json)
+        let response = px.parse(fromJSON: self.json)
         let reference = PhotoBackendResponse(success: true, page: 7, pages: 1000, photos: [])
         XCTAssertTrue(response.page == reference.page)
         XCTAssertTrue(response.pages == reference.pages)
     }
     
     func testCanParse500pxPhotos() {
-        let testBundle = Bundle(for: type(of: self))
-        let fileURL = testBundle.url(forResource: "500px", withExtension: "json")
-        let jsonData = try! Data(contentsOf: fileURL!)
-        let json = JSON(jsonData)
-        
         let px = PhotoBackend500px(withAPIKey: "blah")
-        let response = px.parse(fromJSON: json)
+        let response = px.parse(fromJSON: self.json)
         // Create set of photos
         let photos: [Photo] = []
         for (i, photo) in response.photos.enumerated() {
