@@ -40,28 +40,11 @@ class PhotoViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
+        self.setupPhotoService()
+        
         // Setup collectionview
         self.changeCollectionViewLayout(GridCollectionViewLayout(), fromIndexPath: IndexPath(row: 0, section: 0))
         self.collectionView.backgroundView = self.emptyStateViewController.view
-        
-        // WARN: This allows me to hide the API key from git and upload this project to GitHub, not suited for real world apps
-        if let path = Bundle.main.path(forResource: "PhotoServices", ofType: "plist"), let dict = NSDictionary(contentsOfFile: path) as? [String: AnyObject] {
-            // Use the 500px backend
-            if let apiKey = dict["500px"] as? String {
-                let photoBackend = PhotoBackend500px(withAPIKey: apiKey)
-                self.photoStore = PhotoStore(backend: photoBackend)
-                self.photoStore?.fetchPhotos(page: self.currentPage, complete: { [unowned self] (response) in
-                    guard response.success else {
-                        // TODO: Handle error
-                        return
-                    }
-                    self.photos = response.photos
-                    self.collectionView.reloadSections(IndexSet(integer: 0))
-                    self.maxPage = response.pages
-                    self.emptyStateViewController.hideProgress()
-                })
-            }
-        }
         
         // Setup refresh control
         self.refreshControl.tintColor = PicsojagsStyleKit.featureColor
@@ -80,6 +63,48 @@ class PhotoViewController: UIViewController {
 
 }
 
+// MARK: - Photo service setup
+
+extension PhotoViewController {
+
+    /// Sets up the photo service
+    func setupPhotoService() {
+        
+        // WARN: This allows me to hide the API key from git and upload this project to GitHub, not suited for real world apps
+        if let path = Bundle.main.path(forResource: "PhotoServices", ofType: "plist"), let dict = NSDictionary(contentsOfFile: path) as? [String: AnyObject] {
+            // Use the 500px backend
+            if let apiKey = dict["500px"] as? String {
+                
+                // Verify API key is present
+                guard apiKey.characters.count > 0 && apiKey != "enter-your-api-key-here" else {
+                    let alert = UIAlertController(title: "500px API key missing", message: "Add an API key for 500px in PhotoServices.plist", preferredStyle: .alert)
+                    let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
+                    alert.addAction(ok)
+                    self.present(alert, animated: true, completion: nil)
+                    return
+                }
+                
+                // Setup backend with API key
+                let photoBackend = PhotoBackend500px(withAPIKey: apiKey)
+                self.photoStore = PhotoStore(backend: photoBackend)
+                
+                // Fetch first collection of photos
+                self.photoStore?.fetchPhotos(page: self.currentPage, complete: { [unowned self] (response) in
+                    guard response.success else {
+                        // TODO: Handle error
+                        return
+                    }
+                    self.photos = response.photos
+                    self.collectionView.reloadSections(IndexSet(integer: 0))
+                    self.maxPage = response.pages
+                    self.emptyStateViewController.hideProgress()
+                })
+                
+            }
+        }
+    }
+}
+
 // MARK: - UI methods
 
 extension PhotoViewController {
@@ -89,8 +114,7 @@ extension PhotoViewController {
     /// - Parameter sender: The object making the call.
     @IBAction func backToGrid(sender: AnyObject) {
         guard let indexPath = collectionView.indexPathsForVisibleItems.first else {
-            // We need the index path to return to
-            return
+            return // We need the index path to return to
         }
         // FIXME: This is a workaround, should be able to get this working by customizing UICollectionViewFlowLayout
         UIView.animate(withDuration: 0.1, animations: {
