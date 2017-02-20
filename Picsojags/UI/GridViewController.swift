@@ -17,6 +17,7 @@ class GridViewController: UIViewController {
     var photoStore: PhotoStore?
     
     fileprivate var photos: [Photo] = []
+    fileprivate var currentPage = 1
     
     fileprivate let itemsPerRow: CGFloat = 3
     fileprivate let sectionInsets = UIEdgeInsets(top: 16.0, left: 16.0, bottom: 16.0, right: 16.0)
@@ -32,7 +33,7 @@ class GridViewController: UIViewController {
             if let apiKey = dict["500px"] as? String {
                 let photoBackend = PhotoBackend500px(withAPIKey: apiKey)
                 self.photoStore = PhotoStore(backend: photoBackend)
-                self.photoStore?.fetchPhotos(page: 1, complete: { (response) in
+                self.photoStore?.fetchPhotos(page: self.currentPage, complete: { (response) in
                     guard response.success else {
                         // TODO: Handle error
                         return
@@ -70,7 +71,7 @@ class GridViewController: UIViewController {
 
 // MARK: - Refreshing and endless scrolling
 
-extension GridViewController {
+extension GridViewController: UIScrollViewDelegate {
     
     func pullToRefresh() {
         guard let photoStore = self.photoStore else {
@@ -87,6 +88,22 @@ extension GridViewController {
             self.collectionView.reloadData()
             self.refreshControl.endRefreshing()
         })
+    }
+    
+    func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
+        guard let photoStore = self.photoStore else {
+            return
+        }
+        
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        if offsetY > contentHeight - scrollView.frame.size.height {
+            self.currentPage += 1 // Fetch next page
+            photoStore.fetchPhotos(page: self.currentPage, complete: { (response) in
+                self.photos = self.photos + response.photos
+                self.collectionView.reloadData()
+            })
+        }
     }
     
 }
