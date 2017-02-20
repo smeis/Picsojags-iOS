@@ -11,7 +11,8 @@ import Kingfisher
 
 class GridViewController: UIViewController {
 
-    @IBOutlet weak var gridCollectionView: UICollectionView!
+    @IBOutlet weak var collectionView: UICollectionView!
+    fileprivate var refreshControl = UIRefreshControl()
     
     var photoStore: PhotoStore?
     
@@ -37,10 +38,16 @@ class GridViewController: UIViewController {
                         return
                     }
                     self.photos = response.photos
-                    self.gridCollectionView.reloadData()
+                    self.collectionView.reloadData()
                 })
             }
         }
+        
+        // Setup refresh control
+        self.refreshControl.tintColor = .blue // TODO: Override color with PaintCode
+        self.refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
+        self.collectionView.addSubview(refreshControl)
+        self.collectionView.alwaysBounceVertical = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -59,6 +66,29 @@ class GridViewController: UIViewController {
     }
     */
 
+}
+
+// MARK: - Refreshing and endless scrolling
+
+extension GridViewController {
+    
+    func pullToRefresh() {
+        guard let photoStore = self.photoStore else {
+            self.refreshControl.endRefreshing()
+            return
+        }
+        
+        photoStore.fetchPhotos(page: 1, complete: { (response) in
+            guard response.success else {
+                // TODO: Handle error
+                return
+            }
+            self.photos = response.photos
+            self.collectionView.reloadData()
+            self.refreshControl.endRefreshing()
+        })
+    }
+    
 }
 
 // MARK: - Data source

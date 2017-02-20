@@ -86,7 +86,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Picsojags" id="jGa-x8-yXp"/>
                     <connections>
-                        <outlet property="gridCollectionView" destination="ed8-V9-Jao" id="Cwf-Cl-lHE"/>
+                        <outlet property="collectionView" destination="ed8-V9-Jao" id="5Mj-nV-EO1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WfP-Y2-l2W" userLabel="First Responder" sceneMemberID="firstResponder"/>
