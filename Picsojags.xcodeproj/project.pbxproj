@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4CF9729C85A794A323EDF3E2 /* Pods_PicsojagsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87FE9F3916A299C89CC89D49 /* Pods_PicsojagsTests.framework */; };
+		B51CD2DE1E5B1DA500731403 /* PicsojagsStyleKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51CD2DD1E5B1DA500731403 /* PicsojagsStyleKit.swift */; };
 		B528EEAC1E599ACF00D04B94 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B528EEAB1E599ACF00D04B94 /* AppDelegate.swift */; };
 		B528EEB31E599ACF00D04B94 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B528EEB11E599ACF00D04B94 /* Main.storyboard */; };
 		B528EEB51E599ACF00D04B94 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B528EEB41E599ACF00D04B94 /* Assets.xcassets */; };
@@ -45,6 +46,7 @@
 		92EA132379C443AE3BF46C39 /* Pods-Picsojags.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Picsojags.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Picsojags/Pods-Picsojags.debug.xcconfig"; sourceTree = "<group>"; };
 		9D2D9DD6734229463E6A74AB /* Pods-PicsojagsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PicsojagsTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PicsojagsTests/Pods-PicsojagsTests.debug.xcconfig"; sourceTree = "<group>"; };
 		AD2FA494B34924904B708773 /* Pods-Picsojags.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Picsojags.release.xcconfig"; path = "Pods/Target Support Files/Pods-Picsojags/Pods-Picsojags.release.xcconfig"; sourceTree = "<group>"; };
+		B51CD2DD1E5B1DA500731403 /* PicsojagsStyleKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PicsojagsStyleKit.swift; sourceTree = "<group>"; };
 		B528EEA81E599ACF00D04B94 /* Picsojags.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Picsojags.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B528EEAB1E599ACF00D04B94 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B528EEB21E599ACF00D04B94 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -99,6 +101,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		B51CD2DC1E5B1DA500731403 /* StyleKits */ = {
+			isa = PBXGroup;
+			children = (
+				B51CD2DD1E5B1DA500731403 /* PicsojagsStyleKit.swift */,
+			);
+			path = StyleKits;
+			sourceTree = "<group>";
+		};
 		B528EE9F1E599ACF00D04B94 = {
 			isa = PBXGroup;
 			children = (
@@ -123,6 +133,7 @@
 		B528EEAA1E599ACF00D04B94 /* Picsojags */ = {
 			isa = PBXGroup;
 			children = (
+				B51CD2DC1E5B1DA500731403 /* StyleKits */,
 				B528EEED1E59C54400D04B94 /* UI */,
 				B528EEE21E59C07200D04B94 /* Photos */,
 				B528EEAB1E599ACF00D04B94 /* AppDelegate.swift */,
@@ -460,6 +471,7 @@
 				B528EEE51E59C15500D04B94 /* PhotoBackend.swift in Sources */,
 				B528EF011E59E7EE00D04B94 /* PhotoViewController.swift in Sources */,
 				B5683AC01E5AE3F200CC7618 /* PhotoCollectionViewCell.swift in Sources */,
+				B51CD2DE1E5B1DA500731403 /* PicsojagsStyleKit.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
