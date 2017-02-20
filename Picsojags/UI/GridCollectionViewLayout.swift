@@ -14,38 +14,25 @@ class GridCollectionViewLayout: UICollectionViewFlowLayout {
     /// The maximum items to appear in the row.
     fileprivate let itemsPerRow: CGFloat = 3
 
-    override init() {
-        super.init()
-        setupLayout()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setupLayout()
-    }
-    
-    func setupLayout() {
+    override func prepare() {
+        super.prepare()
         self.minimumInteritemSpacing = 1
         self.minimumLineSpacing = 1
         self.scrollDirection = .vertical
+        let availableWidth = self.collectionView!.bounds.width - self.itemsPerRow
+        let widthPerItem = floor(availableWidth / self.itemsPerRow)
+        self.itemSize = CGSize(width: widthPerItem, height: widthPerItem)
     }
     
-    /// Override the item size to fit the items per row.
-    override var itemSize: CGSize {
-        set {}
-        get {
-            let availableWidth = self.collectionView!.bounds.width - self.itemsPerRow
-            let widthPerItem = floor(availableWidth / self.itemsPerRow)
-            return CGSize(width: widthPerItem, height: widthPerItem)
+    override func initialLayoutAttributesForAppearingItem(at itemIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        if let attr = self.layoutAttributesForItem(at: itemIndexPath) {
+            attr.alpha = 0 // Fade in
+            let scaleFactor = CGFloat(0.2)
+            let transform = CGAffineTransform(scaleX: scaleFactor, y: scaleFactor)
+            attr.transform = transform
+            return attr
         }
-    }
-    
-    override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
-        return false
-    }
-    
-    override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint) -> CGPoint {
-        return collectionView!.contentOffset
+        return nil
     }
     
 }

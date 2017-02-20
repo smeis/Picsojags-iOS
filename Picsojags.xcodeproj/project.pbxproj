@@ -179,9 +179,7 @@
 		B528EEED1E59C54400D04B94 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				B528EEB11E599ACF00D04B94 /* Main.storyboard */,
-				B528EEB41E599ACF00D04B94 /* Assets.xcassets */,
-				B528EEB61E599ACF00D04B94 /* LaunchScreen.storyboard */,
+				B5F416FA1E5B89BA00D3FC0D /* Main */,
 				B528EEEE1E59C54800D04B94 /* Photos Views */,
 			);
 			name = UI;
@@ -222,6 +220,16 @@
 				B55031F41E5AF4A3006EFB49 /* FullCollectionViewLayout.swift */,
 			);
 			name = Layouts;
+			sourceTree = "<group>";
+		};
+		B5F416FA1E5B89BA00D3FC0D /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				B528EEB11E599ACF00D04B94 /* Main.storyboard */,
+				B528EEB41E599ACF00D04B94 /* Assets.xcassets */,
+				B528EEB61E599ACF00D04B94 /* LaunchScreen.storyboard */,
+			);
+			name = Main;
 			sourceTree = "<group>";
 		};
 		D4DA09F5C7B050C2E6E1F8FB /* Frameworks */ = {

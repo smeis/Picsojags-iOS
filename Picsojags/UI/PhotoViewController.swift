@@ -41,7 +41,7 @@ class PhotoViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         // Setup collectionview
-        self.changeCollectionViewLayout(GridCollectionViewLayout(), fromIndexPath: IndexPath(row: 1, section: 1))
+        self.changeCollectionViewLayout(GridCollectionViewLayout(), fromIndexPath: IndexPath(row: 0, section: 0))
         self.collectionView.backgroundView = self.emptyStateViewController.view
         
         // WARN: This allows me to hide the API key from git and upload this project to GitHub, not suited for real world apps
@@ -56,8 +56,8 @@ class PhotoViewController: UIViewController {
                         return
                     }
                     self.photos = response.photos
+                    self.collectionView.reloadSections(IndexSet(integer: 0))
                     self.maxPage = response.pages
-                    self.collectionView.reloadData()
                     self.emptyStateViewController.hideProgress()
                 })
             }
@@ -92,7 +92,14 @@ extension PhotoViewController {
             // We need the index path to return to
             return
         }
-        self.changeCollectionViewLayout(GridCollectionViewLayout(), fromIndexPath: indexPath)
+        UIView.animate(withDuration: 0.1, animations: {
+            self.collectionView.alpha = 0
+        }) { (finished) in
+            self.changeCollectionViewLayout(GridCollectionViewLayout(), fromIndexPath: indexPath)
+            UIView.animate(withDuration: 0.2, animations: {
+                self.collectionView.alpha = 1
+            }, completion: nil)
+        }
     }
     
     fileprivate func changeCollectionViewLayout(_ layout: UICollectionViewLayout, fromIndexPath indexPath: IndexPath) {
@@ -112,11 +119,11 @@ extension PhotoViewController {
                     // Visually update collection view
                     self.collectionView.isPagingEnabled = false
                     self.collectionView.bounces = true
-                    self.collectionView.backgroundColor = .white
                     // Scroll to appropriate item
                     // Hide back button
                     self.navigationItem.setLeftBarButton(nil, animated: true)
                     scrollPos = UICollectionViewScrollPosition.centeredVertically
+                    self.collectionView.reloadData()
                     
                 } else {
                     
@@ -125,12 +132,12 @@ extension PhotoViewController {
                     // Visisually update collection view
                     self.collectionView.isPagingEnabled = true
                     self.collectionView.bounces = false
-                    self.collectionView.backgroundColor = .black
                     // Scroll to correct item
                     // Add back button
                     let leftMenuItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(self.backToGrid));
                     self.navigationItem.setLeftBarButton(leftMenuItem, animated: true);
                     scrollPos = UICollectionViewScrollPosition.centeredHorizontally
+                    self.collectionView.reloadData()
                     
                 }
                 
@@ -139,7 +146,6 @@ extension PhotoViewController {
                     self.itemSize = layout.itemSize
                 }
 
-                self.collectionView.reloadData()
                 self.collectionView.selectItem(at: indexPath, animated: false, scrollPosition: scrollPos)
             }
         }
@@ -182,10 +188,14 @@ extension PhotoViewController: UIScrollViewDelegate {
         guard self.currentPage <= self.maxPage else {
             return // No pages left
         }
-        photoStore.fetchPhotos(page: self.currentPage, complete: { (response) in
+        photoStore.fetchPhotos(page: self.currentPage, complete: { [unowned self] (response) in
+            guard response.success else {
+                // TODO: Handle error
+                return
+            }
             self.photos = self.photos + response.photos // Append new photos
             self.maxPage = response.pages
-            self.collectionView.reloadData()
+            self.collectionView.reloadData() // Crashes when using reloadItemsAt or reloadSections
         })
     }
     
@@ -230,11 +240,14 @@ extension PhotoViewController: UICollectionViewDataSource {
         let photo = self.photos[indexPath.row]
         // Load the fullscreen image when using the fullscreen layout
         if collectionView.collectionViewLayout is FullCollectionViewLayout {
+            cell.backgroundColor = .black
             cell.imageView.contentMode = .scaleAspectFit
-            let placeholder = PicsojagsStyleKit.imageOfPhotoPlaceholderFull(imageSize: self.itemSize)
+            let placeholderSize = CGSize(width: self.itemSize.width, height: self.itemSize.width)
+            let placeholder = PicsojagsStyleKit.imageOfPhotoPlaceholderFull(imageSize: placeholderSize)
 //            cell.imageView.image = placeholder
             cell.imageView.kf.setImage(with: photo.fullPhotoURL, placeholder: placeholder)
         } else { // Use a squared image when using the grid layout
+            cell.backgroundColor = .white
             cell.imageView.contentMode = .scaleAspectFill
             let placeholder = PicsojagsStyleKit.imageOfPhotoPlaceholderGrid(imageSize: self.itemSize)
 //            cell.imageView.image = placeholder
@@ -254,11 +267,34 @@ extension PhotoViewController: UICollectionViewDelegate {
         guard self.collectionView.collectionViewLayout is GridCollectionViewLayout else {
             return
         }
-        // Set the new layout
+        
+        // Create frame size
+        var rect = self.collectionView.frame
+        let offset = self.collectionView.contentOffset
+        rect.origin.x += offset.x
+        rect.origin.y += offset.y + 34 // TODO: Get title bar height programmatically
+        
+        // Update cell to show hq image
+        let photo = self.photos[indexPath.row]
+        let cell = collectionView.cellForItem(at: indexPath) as! PhotoCollectionViewCell
+        cell.backgroundColor = .black
+        let placeholder = PicsojagsStyleKit.imageOfPhotoPlaceholderFull(imageSize: CGSize(width: rect.size.width, height: rect.size.width))
+        cell.imageView.contentMode = .scaleAspectFit
+        cell.imageView.kf.setImage(with: photo.fullPhotoURL, placeholder: placeholder)
+        cell.layer.zPosition = 99999999
+        
+        // Animate into view
+        UIView.animate(withDuration: 0.2, animations: {
+            cell.frame = rect
+        }) { (finished) in
+            // Set the new layout
+            self.changeCollectionViewLayout(FullCollectionViewLayout(), fromIndexPath: indexPath)
+        }
+        
+        // Fetch next page if the last item was selected
         if indexPath.item >= self.photos.count - self.currentPage { // Not sure why, but there's a self.currentPage offset
             self.fetchNextPage()
         }
-        self.changeCollectionViewLayout(FullCollectionViewLayout(), fromIndexPath: indexPath)
     }
     
 }
