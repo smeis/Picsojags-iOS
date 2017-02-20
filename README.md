@@ -21,9 +21,18 @@ $ rake setup
 
 Most importantly, it copies the services configration from ```Config/PhotoServices-sample.plist``` to ```Config/PhotoServices.plist```.
 
+### Minimal manual setup
+
+```
+$ cp ./Config/PhotoServices-sample.plist ./Config/PhotoServices.plist
+$ pod install
+```
+
+Assumes tools like cocoapods and Jazzy (for generating docs) are already installed.
+
 ### Configuration
 
-Add the API keys required for the services you intend to use to ```Config/PhotoServices-sample.plist```. The plist layout is as follows:
+**Important:** Add the API keys required for the services you intend to use to ```Config/PhotoServices-sample.plist```. The plist layout is as follows:
 
 ```
 - root
