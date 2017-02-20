@@ -27,6 +27,8 @@
 		B55031F51E5AF4A3006EFB49 /* FullCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55031F41E5AF4A3006EFB49 /* FullCollectionViewLayout.swift */; };
 		B5683AC01E5AE3F200CC7618 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5683ABF1E5AE3F200CC7618 /* PhotoCollectionViewCell.swift */; };
 		B5E14FCD1E5A0CC100B26238 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B528EEEB1E59C43800D04B94 /* Photo.swift */; };
+		B5F416F81E5B3D6900D3FC0D /* EmptyStateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F416F61E5B3D6900D3FC0D /* EmptyStateViewController.swift */; };
+		B5F416F91E5B3D6900D3FC0D /* EmptyStateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5F416F71E5B3D6900D3FC0D /* EmptyStateViewController.xib */; };
 		CBF050D6F1CB6B8231BB80E3 /* Pods_Picsojags.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDF8D666635B851179737CAA /* Pods_Picsojags.framework */; };
 /* End PBXBuildFile section */
 
@@ -67,6 +69,8 @@
 		B55031F21E5AF492006EFB49 /* GridCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GridCollectionViewLayout.swift; path = UI/GridCollectionViewLayout.swift; sourceTree = "<group>"; };
 		B55031F41E5AF4A3006EFB49 /* FullCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FullCollectionViewLayout.swift; path = UI/FullCollectionViewLayout.swift; sourceTree = "<group>"; };
 		B5683ABF1E5AE3F200CC7618 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhotoCollectionViewCell.swift; path = UI/PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
+		B5F416F61E5B3D6900D3FC0D /* EmptyStateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EmptyStateViewController.swift; path = UI/EmptyStateViewController.swift; sourceTree = "<group>"; };
+		B5F416F71E5B3D6900D3FC0D /* EmptyStateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EmptyStateViewController.xib; path = UI/EmptyStateViewController.xib; sourceTree = "<group>"; };
 		FDF8D666635B851179737CAA /* Pods_Picsojags.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Picsojags.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -178,19 +182,21 @@
 				B528EEB11E599ACF00D04B94 /* Main.storyboard */,
 				B528EEB41E599ACF00D04B94 /* Assets.xcassets */,
 				B528EEB61E599ACF00D04B94 /* LaunchScreen.storyboard */,
-				B528EEEE1E59C54800D04B94 /* Photos */,
+				B528EEEE1E59C54800D04B94 /* Photos Views */,
 			);
 			name = UI;
 			sourceTree = "<group>";
 		};
-		B528EEEE1E59C54800D04B94 /* Photos */ = {
+		B528EEEE1E59C54800D04B94 /* Photos Views */ = {
 			isa = PBXGroup;
 			children = (
 				B55031F11E5AF475006EFB49 /* Layouts */,
 				B528EF001E59E7EE00D04B94 /* PhotoViewController.swift */,
 				B5683ABF1E5AE3F200CC7618 /* PhotoCollectionViewCell.swift */,
+				B5F416F61E5B3D6900D3FC0D /* EmptyStateViewController.swift */,
+				B5F416F71E5B3D6900D3FC0D /* EmptyStateViewController.xib */,
 			);
-			name = Photos;
+			name = "Photos Views";
 			sourceTree = "<group>";
 		};
 		B528EEF71E59DAF600D04B94 /* Config */ = {
@@ -320,6 +326,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5F416F91E5B3D6900D3FC0D /* EmptyStateViewController.xib in Resources */,
 				B528EEB81E599ACF00D04B94 /* LaunchScreen.storyboard in Resources */,
 				B528EEB51E599ACF00D04B94 /* Assets.xcassets in Resources */,
 				B528EEB31E599ACF00D04B94 /* Main.storyboard in Resources */,
@@ -469,6 +476,7 @@
 				B528EEAC1E599ACF00D04B94 /* AppDelegate.swift in Sources */,
 				B528EEEA1E59C41800D04B94 /* PhotoStore.swift in Sources */,
 				B528EEE51E59C15500D04B94 /* PhotoBackend.swift in Sources */,
+				B5F416F81E5B3D6900D3FC0D /* EmptyStateViewController.swift in Sources */,
 				B528EF011E59E7EE00D04B94 /* PhotoViewController.swift in Sources */,
 				B5683AC01E5AE3F200CC7618 /* PhotoCollectionViewCell.swift in Sources */,
 				B51CD2DE1E5B1DA500731403 /* PicsojagsStyleKit.swift in Sources */,

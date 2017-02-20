@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EmptyStateViewController" customModule="Picsojags" customModuleProvider="target">
+            <connections>
+                <outlet property="activityIndicator" destination="Vhv-Bm-TxG" id="Vdl-zC-mQj"/>
+                <outlet property="view" destination="COP-Id-dqE" id="tVn-MQ-gyf"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="COP-Id-dqE">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="EmptyState" translatesAutoresizingMaskIntoConstraints="NO" id="T9x-F4-fcf">
+                    <rect key="frame" x="7" y="118" width="360" height="360"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="360" id="6YB-kt-1ei"/>
+                        <constraint firstAttribute="width" constant="360" id="Z5C-dT-ooG"/>
+                    </constraints>
+                </imageView>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Vhv-Bm-TxG">
+                    <rect key="frame" x="179" y="460" width="20" height="20"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </activityIndicatorView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="T9x-F4-fcf" firstAttribute="centerX" secondItem="COP-Id-dqE" secondAttribute="centerX" id="4ex-pY-8p3"/>
+                <constraint firstItem="T9x-F4-fcf" firstAttribute="centerY" secondItem="COP-Id-dqE" secondAttribute="centerY" constant="-36" id="jpC-zZ-W2C"/>
+            </constraints>
+        </view>
+    </objects>
+    <resources>
+        <image name="EmptyState" width="512" height="512"/>
+    </resources>
+</document>

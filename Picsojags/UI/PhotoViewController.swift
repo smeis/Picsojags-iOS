@@ -18,6 +18,11 @@ class PhotoViewController: UIViewController {
     /// The photo store uses the backend to retrieve images.
     var photoStore: PhotoStore?
     
+    /// Draws the empty state view
+    lazy var emptyStateViewController: EmptyStateViewController = {
+        return EmptyStateViewController(nibName: "EmptyStateViewController", bundle: nil)
+    }()
+    
     /// Refresh control allows for pull to refresh.
     fileprivate var refreshControl = UIRefreshControl()
     /// The array of photos retrieved from the photo service, NSSet might be better suited.
@@ -37,6 +42,7 @@ class PhotoViewController: UIViewController {
         
         // Setup collectionview
         self.changeCollectionViewLayout(GridCollectionViewLayout(), fromIndexPath: IndexPath(row: 1, section: 1))
+        self.collectionView.backgroundView = self.emptyStateViewController.view
         
         // WARN: This allows me to hide the API key from git and upload this project to GitHub, not suited for real world apps
         if let path = Bundle.main.path(forResource: "PhotoServices", ofType: "plist"), let dict = NSDictionary(contentsOfFile: path) as? [String: AnyObject] {
@@ -44,7 +50,7 @@ class PhotoViewController: UIViewController {
             if let apiKey = dict["500px"] as? String {
                 let photoBackend = PhotoBackend500px(withAPIKey: apiKey)
                 self.photoStore = PhotoStore(backend: photoBackend)
-                self.photoStore?.fetchPhotos(page: self.currentPage, complete: { (response) in
+                self.photoStore?.fetchPhotos(page: self.currentPage, complete: { [unowned self] (response) in
                     guard response.success else {
                         // TODO: Handle error
                         return
@@ -52,6 +58,7 @@ class PhotoViewController: UIViewController {
                     self.photos = response.photos
                     self.maxPage = response.pages
                     self.collectionView.reloadData()
+                    self.emptyStateViewController.hideProgress()
                 })
             }
         }
