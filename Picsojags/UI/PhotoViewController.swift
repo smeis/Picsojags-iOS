@@ -92,6 +92,7 @@ extension PhotoViewController {
             // We need the index path to return to
             return
         }
+        // FIXME: This is a workaround, should be able to get this working by customizing UICollectionViewFlowLayout
         UIView.animate(withDuration: 0.1, animations: {
             self.collectionView.alpha = 0
         }) { (finished) in
@@ -236,22 +237,28 @@ extension PhotoViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! PhotoCollectionViewCell
         let photo = self.photos[indexPath.row]
+        
         // Load the fullscreen image when using the fullscreen layout
         if collectionView.collectionViewLayout is FullCollectionViewLayout {
+            
             cell.backgroundColor = .black
             cell.imageView.contentMode = .scaleAspectFit
             let placeholderSize = CGSize(width: self.itemSize.width, height: self.itemSize.width)
             let placeholder = PicsojagsStyleKit.imageOfPhotoPlaceholderFull(imageSize: placeholderSize)
 //            cell.imageView.image = placeholder
             cell.imageView.kf.setImage(with: photo.fullPhotoURL, placeholder: placeholder)
+            
         } else { // Use a squared image when using the grid layout
+            
             cell.backgroundColor = .white
             cell.imageView.contentMode = .scaleAspectFill
             let placeholder = PicsojagsStyleKit.imageOfPhotoPlaceholderGrid(imageSize: self.itemSize)
 //            cell.imageView.image = placeholder
             cell.imageView.kf.setImage(with: photo.squaredPhotoURL, placeholder: placeholder)
+            
         }
         return cell
     }
@@ -267,6 +274,8 @@ extension PhotoViewController: UICollectionViewDelegate {
         guard self.collectionView.collectionViewLayout is GridCollectionViewLayout else {
             return
         }
+        
+        // FIXME: This is a workaround, should be able to get this working by customizing UICollectionViewFlowLayout
         
         // Create frame size
         var rect = self.collectionView.frame

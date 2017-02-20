@@ -395,7 +395,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# http://jeffreysambells.com/2013/01/31/generate-xcode-warnings-from-todo-comments\nTAGS=\"TODO:|FIXME:|DEBUG:\"\necho \"searching ${SRCROOT} for ${TAGS}\"\nfind \"${SRCROOT}\" \\( -name \"*.h\" -or -name \"*.m\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\"";
+			shellScript = "# http://jeffreysambells.com/2013/01/31/generate-xcode-warnings-from-todo-comments\nTAGS=\"TODO:|FIXME:|DEBUG:\"\necho \"searching ${SRCROOT} for ${TAGS}\"\nfind \"${SRCROOT}\" \\( -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\"";
 		};
 		B528EEDE1E599B9C00D04B94 /* Bump build number */ = {
 			isa = PBXShellScriptBuildPhase;
