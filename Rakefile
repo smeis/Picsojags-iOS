@@ -1,3 +1,5 @@
+@@company = "Danger Cove"
+
 namespace :setup do
 
   desc "Copy configuration files"
@@ -52,6 +54,26 @@ namespace :testing do
 
 end
 
+namespace :documentation do
+
+  desc "Clean old documentation"
+  task :docs_clean do
+    puts("Blah #{@@company}")
+  end
+
+  desc "Generate documentation"
+  task :docs_generate do
+    sh "bundle exec jazzy -x -workspace,Picsojags.xcworkspace,-scheme,Picsojags --clean --author 'Danger Cove' --author_url https://www.dangercove.com --output Docs/ --theme fullwidth --min-acl private --exclude ./Pods"
+  end
+
+  desc "Run all documentation tasks"
+  task :docs_all => [:docs_clean, :docs_generate] do
+    puts "=== Documentation Complete ==="
+  end
+
+end
+
 task :test => 'testing:test_all'
 task :setup => 'setup:setup_all'
+task :docs => 'documentation:docs_all'
 task :default => :test

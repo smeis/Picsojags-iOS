@@ -24,20 +24,40 @@ extension String {
 
 /// The photo backend protocol is used by the photo store to make calls to the backend.
 protocol PhotoBackend {
+    /// The API key to use to access the service.
     var apiKey: String { get }
+    /// The base URL to compose others.
     var baseURL: URL { get }
+    /// The standard url session config to apply authentication for instance.
     var urlSessionConfiguration: URLSessionConfiguration { get } // Allow for special configurations, usually auth related
+    /// Init with an API key.
+    ///
+    /// - Parameter apiKey: The API key to use.
     init(withAPIKey apiKey: String)
+    /// Create a search URL based on the supplied parameters.
+    ///
+    /// - Parameters:
+    ///   - keywords: The keywords to search for.
+    ///   - page: The page to fetch.
+    /// - Returns: A new search URL.
     func searchURL(forKeywords keywords: String, page: Int) -> URL?
+    /// Parse a response from the photo service.
+    ///
+    /// - Parameter json: The JSON response from the service.
+    /// - Returns: A standardized response to be used in the UI.
     func parse(fromJSON json: JSON) -> PhotoBackendResponse
 }
 
 
 /// The standardized response from a photo service.
 struct PhotoBackendResponse: Equatable {
+    /// Whether the request was a success.
     fileprivate(set) var success: Bool
+    /// The current page.
     fileprivate(set) var page: Int
+    /// The total amount of pages.
     fileprivate(set) var pages: Int
+    /// The photos that were returned.
     fileprivate(set) var photos: [Photo]
 }
 

@@ -24,6 +24,8 @@ class PhotoViewController: UIViewController {
     fileprivate var photos: [Photo] = []
     /// The current page.
     fileprivate var currentPage = 1
+    /// The last page to fetch, returned by the photo service.
+    fileprivate var maxPage = 1
     
     /// Sets up the photo store and UI.
     override func viewDidLoad() {
@@ -46,6 +48,7 @@ class PhotoViewController: UIViewController {
                         return
                     }
                     self.photos = response.photos
+                    self.maxPage = response.pages
                     self.collectionView.reloadData()
                 })
             }
@@ -114,6 +117,7 @@ extension PhotoViewController: UIScrollViewDelegate {
                 return
             }
             self.photos = response.photos
+            self.maxPage = response.pages
             self.currentPage = 1 // Reset paging
             self.collectionView.reloadData()
             self.refreshControl.endRefreshing()
@@ -146,8 +150,12 @@ extension PhotoViewController: UIScrollViewDelegate {
         }
         if fetchNextPage {
             self.currentPage += 1 // Fetch next page
+            guard self.currentPage <= self.maxPage else {
+                return // No pages left
+            }
             photoStore.fetchPhotos(page: self.currentPage, complete: { (response) in
                 self.photos = self.photos + response.photos // Append new photos
+                self.maxPage = response.pages
                 self.collectionView.reloadData()
             })
         }

@@ -20,8 +20,9 @@ Add the API keys required for the services you intend to use to ```Config/PhotoS
 - root
 |- Services: Dictionary 
   |- 500px: kjdfjhUYERHJ7435438
-  |- Instagram: KJkjhdfsjHewr348z 
 ```
+
+**Note:** I don't recommend storing your API keys in you app this way; they're easily accessed by looking through your app's resources. It's just a convenient way to hide keys from git commits in an open-source project, like this.
 
 ## Testing
 
@@ -32,6 +33,16 @@ $ rake test
 ```
 
 Or just press `⌘ + U` in Xcode.
+
+## Documentation
+
+Generate the documentation by calling:
+
+```
+$ rake docs
+```
+
+Access the generated code reference by opening `Docs/index.html`.
 
 ## License
 

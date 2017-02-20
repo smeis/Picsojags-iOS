@@ -27,6 +27,7 @@
 # Custom additions
 
 Config/PhotoServices.plist
+Docs/
 
 #####
 # OS X temporary files that should never be committed
@@ -214,7 +215,3 @@ Pods/
 #
 #*.xccheckout
 #
-####
-# Documentation
-# 
-Docs/
