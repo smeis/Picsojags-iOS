@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// Add an imageview to the collection view cell.
 class PhotoCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
 }

@@ -8,10 +8,9 @@
 
 import UIKit
 
+/// Draws a fullscreen layout.
 class FullCollectionViewLayout: UICollectionViewFlowLayout {
 
-    fileprivate let itemsPerRow: CGFloat = 3
-    
     override init() {
         super.init()
         setupLayout()
@@ -28,6 +27,7 @@ class FullCollectionViewLayout: UICollectionViewFlowLayout {
         self.scrollDirection = .horizontal
     }
     
+    /// Override the item size to fit the cell in the screen.
     override var itemSize: CGSize {
         set {}
         get {

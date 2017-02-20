@@ -8,8 +8,10 @@
 
 import UIKit
 
+/// Draws a grid layout.
 class GridCollectionViewLayout: UICollectionViewFlowLayout {
 
+    /// The maximum items to appear in the row.
     fileprivate let itemsPerRow: CGFloat = 3
 
     override init() {
@@ -28,6 +30,7 @@ class GridCollectionViewLayout: UICollectionViewFlowLayout {
         self.scrollDirection = .vertical
     }
     
+    /// Override the item size to fit the items per row.
     override var itemSize: CGSize {
         set {}
         get {

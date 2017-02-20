@@ -8,9 +8,12 @@
 
 import UIKit
 
+/// Photo model.
 struct Photo: Equatable {
     
+    /// Squared photo URL to be used in a grid.
     fileprivate(set) var squaredPhotoURL: URL
+    /// Larger size image URL to be used fullscreen.
     fileprivate(set) var fullPhotoURL: URL
 
 }

@@ -9,16 +9,23 @@
 import UIKit
 import Kingfisher
 
+/// Displays the retrieved photos.
 class PhotoViewController: UIViewController {
 
+    /// The main collection view, displays photos.
     @IBOutlet weak var collectionView: UICollectionView!
-    fileprivate var refreshControl = UIRefreshControl()
     
+    /// The photo store uses the backend to retrieve images.
     var photoStore: PhotoStore?
     
+    /// Refresh control allows for pull to refresh.
+    fileprivate var refreshControl = UIRefreshControl()
+    /// The array of photos retrieved from the photo service, NSSet might be better suited.
     fileprivate var photos: [Photo] = []
+    /// The current page.
     fileprivate var currentPage = 1
     
+    /// Sets up the photo store and UI.
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -58,31 +65,30 @@ class PhotoViewController: UIViewController {
         
         // Kingfisher empties its cache automatically when we receive a warning
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 
 // MARK: - UI methods
-
 extension PhotoViewController {
     
+    /// Takes the UI back from the fullscreen view to the grid view.
+    ///
+    /// - Parameter sender: The object making the call.
     @IBAction func backToGrid(sender: AnyObject) {
-        self.collectionView.setCollectionViewLayout(GridCollectionViewLayout(), animated: true) { [unowned self] (finished) in
+        guard let indexPath = collectionView.indexPathsForVisibleItems.first else {
+            // We need the index path to return to
+            return
+        }
+        self.collectionView.setCollectionViewLayout(GridCollectionViewLayout(), animated: false) { [unowned self] (finished) in
             if finished {
+                // Visually update collection view
                 self.collectionView.isPagingEnabled = false
                 self.collectionView.bounces = true
                 self.collectionView.backgroundColor = .white
                 self.collectionView.reloadData()
+                // Scroll to appropriate item
+                self.collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .centeredVertically)
+                // Hide back button
                 self.navigationItem.setLeftBarButton(nil, animated: true)
             }
         }
@@ -94,12 +100,14 @@ extension PhotoViewController {
 
 extension PhotoViewController: UIScrollViewDelegate {
     
+    /// Handles pull to refresh
     func pullToRefresh() {
         guard let photoStore = self.photoStore else {
-            self.refreshControl.endRefreshing()
+            self.refreshControl.endRefreshing() // Ensure pull to refresh animation ends
             return
         }
         
+        // Fetch the original set of photos, loses any paged content
         photoStore.fetchPhotos(page: 1, complete: { (response) in
             guard response.success else {
                 // TODO: Handle error
@@ -112,29 +120,34 @@ extension PhotoViewController: UIScrollViewDelegate {
         })
     }
     
+    /// Handle endless scrolling.
+    ///
+    /// - Parameter scrollView: The scrollview that contains the collection view.
     func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
         guard let photoStore = self.photoStore else {
             return
         }
         var fetchNextPage = false
+        // For the grid view, monitor scroll offset
         if self.collectionView.collectionViewLayout is GridCollectionViewLayout {
             let offsetY = scrollView.contentOffset.y
             let contentHeight = scrollView.contentSize.height
             if offsetY > contentHeight - scrollView.frame.size.height {
                 fetchNextPage = true
             }
-        } else {
-            // Check if at the last page
-            let pageWidth = collectionView.bounds.size.width
-            let currentPage = Int(ceil(collectionView.contentOffset.x / pageWidth) + 1)
-            if currentPage >= self.photos.count {
-                fetchNextPage = true
+        }
+        else { // For the fullscreen view, monitor item index
+            // Check if at the last page (item)
+            if let indexPath = self.collectionView.indexPathsForVisibleItems.last {
+                if indexPath.item >= self.photos.count - self.currentPage { // Not sure why, but there's a self.currentPage offset
+                    fetchNextPage = true
+                }
             }
         }
         if fetchNextPage {
             self.currentPage += 1 // Fetch next page
             photoStore.fetchPhotos(page: self.currentPage, complete: { (response) in
-                self.photos = self.photos + response.photos
+                self.photos = self.photos + response.photos // Append new photos
                 self.collectionView.reloadData()
             })
         }
@@ -157,10 +170,11 @@ extension PhotoViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! PhotoCollectionViewCell
         let photo = self.photos[indexPath.row]
+        // Load the fullscreen image when using the fullscreen layout
         if collectionView.collectionViewLayout is FullCollectionViewLayout {
             cell.imageView.contentMode = .scaleAspectFit
             cell.imageView.kf.setImage(with: photo.fullPhotoURL)
-        } else {
+        } else { // Use a squared image when using the grid layout
             cell.imageView.contentMode = .scaleAspectFill
             cell.imageView.kf.setImage(with: photo.squaredPhotoURL)
         }
@@ -169,19 +183,26 @@ extension PhotoViewController: UICollectionViewDataSource {
     
 }
 
+// MARK: - Collection view delegate
+
 extension PhotoViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if self.collectionView.collectionViewLayout is FullCollectionViewLayout {
+        // Only select items in grid view
+        guard self.collectionView.collectionViewLayout is GridCollectionViewLayout else {
             return
         }
-        self.collectionView.setCollectionViewLayout(FullCollectionViewLayout(), animated: true) { [unowned self] (finished) in
+        // Set the new layout
+        self.collectionView.setCollectionViewLayout(FullCollectionViewLayout(), animated: false) { [unowned self] (finished) in
             if finished {
+                // Visisually update collection view
                 self.collectionView.isPagingEnabled = true
                 self.collectionView.bounces = false
                 self.collectionView.backgroundColor = .black
                 self.collectionView.reloadData()
+                // Scroll to correct item
                 self.collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .centeredHorizontally)
+                // Add back button
                 let leftMenuItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(self.backToGrid));
                 self.navigationItem.setLeftBarButton(leftMenuItem, animated: false);
             }

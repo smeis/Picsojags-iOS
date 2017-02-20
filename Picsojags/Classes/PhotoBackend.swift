@@ -20,8 +20,9 @@ extension String {
     }
 }
 
-// MARK: - Protocol and struct
+// MARK: - Backend protocol
 
+/// The photo backend protocol is used by the photo store to make calls to the backend.
 protocol PhotoBackend {
     var apiKey: String { get }
     var baseURL: URL { get }
@@ -31,6 +32,8 @@ protocol PhotoBackend {
     func parse(fromJSON json: JSON) -> PhotoBackendResponse
 }
 
+
+/// The standardized response from a photo service.
 struct PhotoBackendResponse: Equatable {
     fileprivate(set) var success: Bool
     fileprivate(set) var page: Int
@@ -57,23 +60,36 @@ func ==(lhs: PhotoBackendResponse, rhs: PhotoBackendResponse) -> Bool {
 
 // MARK: - Backends
 
+/// The 500px backend.
 struct PhotoBackend500px: PhotoBackend {
 
+    /// The API key used by the backend.
     fileprivate(set) var apiKey: String
+    /// The base URL used for generating other URLs.
     let baseURL: URL = URL(string: "https://api.500px.com/v1")!
     
+    /// Initialize a backend with an API key.
+    ///
+    /// - Parameter apiKey: The API key to use.
     init(withAPIKey apiKey: String) {
         self.apiKey = apiKey
     }
     
     // MARK: - URL Session configuration
-    
+   
+    /// Returns a customized url session config, often used for authentication.
     var urlSessionConfiguration: URLSessionConfiguration {
         return URLSessionConfiguration.default // No special configuration, consumer key is set in URL
     }
     
     // MARK: - Endpoints
     
+    /// Creates a URL that fires a search request at the photo service.
+    ///
+    /// - Parameters:
+    ///   - keywords: The keywords to search for. Escaped automatically.
+    ///   - page: The page to fetch.
+    /// - Returns: Returns a URL or nil.
     func searchURL(forKeywords keywords: String, page: Int = 1) -> URL? {
         
         // Escape keywords
@@ -86,8 +102,12 @@ struct PhotoBackend500px: PhotoBackend {
         return URL(string: "\(searchURL.absoluteString)?\(parameterString)")
     }
     
-    // MARK: - parameterString
+    // MARK: - Parsing
     
+    /// Parse a response from the photo service.
+    ///
+    /// - Parameter json: The JSON response from the photo service.
+    /// - Returns: A standardized response to be used in the UI.
     func parse(fromJSON json: JSON) -> PhotoBackendResponse {
         let page = json["current_page"].intValue
         let pages = json["total_pages"].intValue
