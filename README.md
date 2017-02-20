@@ -2,6 +2,8 @@
 
 Your source of daily Jaguar photos. The car, not the cat.
 
+Hi Joost ;)
+
 ## Setup
 
 To perform the necessary steps to compile this project, run the following command in the project root:
@@ -47,6 +49,10 @@ $ rake test
 ```
 
 Or just press `⌘ + U` in Xcode.
+
+## Improvements
+
+Comments prefixed with WARN:/TODO:/FIXME: will automatically show up as warnings. Those are great places to start improving.
 
 ## License
 
