@@ -18,10 +18,12 @@
 		B528EEEC1E59C43800D04B94 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B528EEEB1E59C43800D04B94 /* Photo.swift */; };
 		B528EEFC1E59DDB700D04B94 /* PhotoServices.plist in Resources */ = {isa = PBXBuildFile; fileRef = B528EEFB1E59DDB700D04B94 /* PhotoServices.plist */; };
 		B528EEFE1E59E38E00D04B94 /* PicsojagsPhotoBackendTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B528EEFD1E59E38E00D04B94 /* PicsojagsPhotoBackendTests.swift */; };
-		B528EF011E59E7EE00D04B94 /* GridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B528EF001E59E7EE00D04B94 /* GridViewController.swift */; };
+		B528EF011E59E7EE00D04B94 /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B528EF001E59E7EE00D04B94 /* PhotoViewController.swift */; };
 		B528EF021E59F0D500D04B94 /* PhotoBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = B528EEE41E59C15500D04B94 /* PhotoBackend.swift */; };
 		B528EF041E5A090E00D04B94 /* PicsojagsPhotoBackendParsingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B528EF031E5A090E00D04B94 /* PicsojagsPhotoBackendParsingTests.swift */; };
 		B528EF071E5A0AC600D04B94 /* 500px.json in Resources */ = {isa = PBXBuildFile; fileRef = B528EF061E5A0AC600D04B94 /* 500px.json */; };
+		B55031F31E5AF492006EFB49 /* GridCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55031F21E5AF492006EFB49 /* GridCollectionViewLayout.swift */; };
+		B55031F51E5AF4A3006EFB49 /* FullCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55031F41E5AF4A3006EFB49 /* FullCollectionViewLayout.swift */; };
 		B5683AC01E5AE3F200CC7618 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5683ABF1E5AE3F200CC7618 /* PhotoCollectionViewCell.swift */; };
 		B5E14FCD1E5A0CC100B26238 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B528EEEB1E59C43800D04B94 /* Photo.swift */; };
 		CBF050D6F1CB6B8231BB80E3 /* Pods_Picsojags.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDF8D666635B851179737CAA /* Pods_Picsojags.framework */; };
@@ -57,9 +59,11 @@
 		B528EEEB1E59C43800D04B94 /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Photo.swift; path = Models/Photo.swift; sourceTree = "<group>"; };
 		B528EEFB1E59DDB700D04B94 /* PhotoServices.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PhotoServices.plist; path = Config/PhotoServices.plist; sourceTree = "<group>"; };
 		B528EEFD1E59E38E00D04B94 /* PicsojagsPhotoBackendTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PicsojagsPhotoBackendTests.swift; sourceTree = "<group>"; };
-		B528EF001E59E7EE00D04B94 /* GridViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GridViewController.swift; path = UI/GridViewController.swift; sourceTree = "<group>"; };
+		B528EF001E59E7EE00D04B94 /* PhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhotoViewController.swift; path = UI/PhotoViewController.swift; sourceTree = "<group>"; };
 		B528EF031E5A090E00D04B94 /* PicsojagsPhotoBackendParsingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PicsojagsPhotoBackendParsingTests.swift; sourceTree = "<group>"; };
 		B528EF061E5A0AC600D04B94 /* 500px.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = 500px.json; path = Mocks/500px.json; sourceTree = "<group>"; };
+		B55031F21E5AF492006EFB49 /* GridCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GridCollectionViewLayout.swift; path = UI/GridCollectionViewLayout.swift; sourceTree = "<group>"; };
+		B55031F41E5AF4A3006EFB49 /* FullCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FullCollectionViewLayout.swift; path = UI/FullCollectionViewLayout.swift; sourceTree = "<group>"; };
 		B5683ABF1E5AE3F200CC7618 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhotoCollectionViewCell.swift; path = UI/PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		FDF8D666635B851179737CAA /* Pods_Picsojags.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Picsojags.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -171,7 +175,8 @@
 		B528EEEE1E59C54800D04B94 /* Photos */ = {
 			isa = PBXGroup;
 			children = (
-				B528EF001E59E7EE00D04B94 /* GridViewController.swift */,
+				B55031F11E5AF475006EFB49 /* Layouts */,
+				B528EF001E59E7EE00D04B94 /* PhotoViewController.swift */,
 				B5683ABF1E5AE3F200CC7618 /* PhotoCollectionViewCell.swift */,
 			);
 			name = Photos;
@@ -191,6 +196,15 @@
 				B528EF061E5A0AC600D04B94 /* 500px.json */,
 			);
 			name = Mocks;
+			sourceTree = "<group>";
+		};
+		B55031F11E5AF475006EFB49 /* Layouts */ = {
+			isa = PBXGroup;
+			children = (
+				B55031F21E5AF492006EFB49 /* GridCollectionViewLayout.swift */,
+				B55031F41E5AF4A3006EFB49 /* FullCollectionViewLayout.swift */,
+			);
+			name = Layouts;
 			sourceTree = "<group>";
 		};
 		D4DA09F5C7B050C2E6E1F8FB /* Frameworks */ = {
@@ -438,11 +452,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B55031F31E5AF492006EFB49 /* GridCollectionViewLayout.swift in Sources */,
+				B55031F51E5AF4A3006EFB49 /* FullCollectionViewLayout.swift in Sources */,
 				B528EEEC1E59C43800D04B94 /* Photo.swift in Sources */,
 				B528EEAC1E599ACF00D04B94 /* AppDelegate.swift in Sources */,
 				B528EEEA1E59C41800D04B94 /* PhotoStore.swift in Sources */,
 				B528EEE51E59C15500D04B94 /* PhotoBackend.swift in Sources */,
-				B528EF011E59E7EE00D04B94 /* GridViewController.swift in Sources */,
+				B528EF011E59E7EE00D04B94 /* PhotoViewController.swift in Sources */,
 				B5683AC01E5AE3F200CC7618 /* PhotoCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

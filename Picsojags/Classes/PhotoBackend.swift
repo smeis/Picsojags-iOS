@@ -81,7 +81,7 @@ struct PhotoBackend500px: PhotoBackend {
 
         // Compose URL, maybe use NSURLComponents
         let searchURL = self.baseURL.appendingPathComponent("photos/search")
-        let parameters = ["term=\(escapedKeywords)", "page=\(page)", "consumer_key=\(self.apiKey)", "image_size=3,6", "rpp=100"]
+        let parameters = ["term=\(escapedKeywords)", "page=\(page)", "consumer_key=\(self.apiKey)", "image_size=3,6", "rpp=20"]
         let parameterString = parameters.joined(separator: "&")
         return URL(string: "\(searchURL.absoluteString)?\(parameterString)")
     }

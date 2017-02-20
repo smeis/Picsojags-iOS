@@ -28,7 +28,7 @@
         <!--Picsojags-->
         <scene sceneID="zsi-de-d9W">
             <objects>
-                <viewController id="LYM-E1-e1f" customClass="GridViewController" customModule="Picsojags" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="LYM-E1-e1f" customClass="PhotoViewController" customModule="Picsojags" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="CRm-q4-VhB"/>
                         <viewControllerLayoutGuide type="bottom" id="roa-TU-AEP"/>
@@ -72,7 +72,7 @@
                                 </cells>
                                 <connections>
                                     <outlet property="dataSource" destination="LYM-E1-e1f" id="Gh0-rK-AZc"/>
-                                    <outlet property="delegate" destination="LYM-E1-e1f" id="ddF-ac-zQh"/>
+                                    <outlet property="delegate" destination="LYM-E1-e1f" id="REf-8t-8wE"/>
                                 </connections>
                             </collectionView>
                         </subviews>

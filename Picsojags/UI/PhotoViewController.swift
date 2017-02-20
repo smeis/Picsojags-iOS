@@ -9,7 +9,7 @@
 import UIKit
 import Kingfisher
 
-class GridViewController: UIViewController {
+class PhotoViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
     fileprivate var refreshControl = UIRefreshControl()
@@ -18,9 +18,6 @@ class GridViewController: UIViewController {
     
     fileprivate var photos: [Photo] = []
     fileprivate var currentPage = 1
-    
-    fileprivate let itemsPerRow: CGFloat = 3
-    fileprivate let sectionInsets = UIEdgeInsets(top: 16.0, left: 16.0, bottom: 16.0, right: 16.0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,6 +46,10 @@ class GridViewController: UIViewController {
         self.refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
         self.collectionView.addSubview(refreshControl)
         self.collectionView.alwaysBounceVertical = true
+        
+        // Setup collectionview
+        self.collectionView.collectionViewLayout.invalidateLayout()
+        self.collectionView.collectionViewLayout = GridCollectionViewLayout()
     }
 
     override func didReceiveMemoryWarning() {
@@ -69,9 +70,27 @@ class GridViewController: UIViewController {
 
 }
 
+// MARK: - UI methods
+
+extension PhotoViewController {
+    
+    @IBAction func backToGrid(sender: AnyObject) {
+        self.collectionView.setCollectionViewLayout(GridCollectionViewLayout(), animated: true) { [unowned self] (finished) in
+            if finished {
+                self.collectionView.isPagingEnabled = false
+                self.collectionView.bounces = true
+                self.collectionView.backgroundColor = .white
+                self.collectionView.reloadData()
+                self.navigationItem.setLeftBarButton(nil, animated: true)
+            }
+        }
+    }
+    
+}
+
 // MARK: - Refreshing and endless scrolling
 
-extension GridViewController: UIScrollViewDelegate {
+extension PhotoViewController: UIScrollViewDelegate {
     
     func pullToRefresh() {
         guard let photoStore = self.photoStore else {
@@ -85,6 +104,7 @@ extension GridViewController: UIScrollViewDelegate {
                 return
             }
             self.photos = response.photos
+            self.currentPage = 1 // Reset paging
             self.collectionView.reloadData()
             self.refreshControl.endRefreshing()
         })
@@ -94,10 +114,22 @@ extension GridViewController: UIScrollViewDelegate {
         guard let photoStore = self.photoStore else {
             return
         }
-        
-        let offsetY = scrollView.contentOffset.y
-        let contentHeight = scrollView.contentSize.height
-        if offsetY > contentHeight - scrollView.frame.size.height {
+        var fetchNextPage = false
+        if self.collectionView.collectionViewLayout is GridCollectionViewLayout {
+            let offsetY = scrollView.contentOffset.y
+            let contentHeight = scrollView.contentSize.height
+            if offsetY > contentHeight - scrollView.frame.size.height {
+                fetchNextPage = true
+            }
+        } else {
+            // Check if at the last page
+            let pageWidth = collectionView.bounds.size.width
+            let currentPage = Int(ceil(collectionView.contentOffset.x / pageWidth) + 1)
+            if currentPage >= self.photos.count {
+                fetchNextPage = true
+            }
+        }
+        if fetchNextPage {
             self.currentPage += 1 // Fetch next page
             photoStore.fetchPhotos(page: self.currentPage, complete: { (response) in
                 self.photos = self.photos + response.photos
@@ -110,7 +142,7 @@ extension GridViewController: UIScrollViewDelegate {
 
 // MARK: - Data source
 
-extension GridViewController: UICollectionViewDataSource {
+extension PhotoViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -123,30 +155,34 @@ extension GridViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! PhotoCollectionViewCell
         let photo = self.photos[indexPath.row]
-        cell.imageView.kf.setImage(with: photo.squaredPhotoURL)
+        if collectionView.collectionViewLayout is FullCollectionViewLayout {
+            cell.imageView.contentMode = .scaleAspectFit
+            cell.imageView.kf.setImage(with: photo.fullPhotoURL)
+        } else {
+            cell.imageView.contentMode = .scaleAspectFill
+            cell.imageView.kf.setImage(with: photo.squaredPhotoURL)
+        }
         return cell
     }
     
 }
 
-// MARK: - Flow layout
-
-extension GridViewController: UICollectionViewDelegateFlowLayout {
+extension PhotoViewController: UICollectionViewDelegate {
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let paddingSpace = self.sectionInsets.left * (self.itemsPerRow + 1)
-        let availableWidth = self.view.frame.width - paddingSpace
-        let widthPerItem = floor(availableWidth / self.itemsPerRow)
-        
-        return CGSize(width: widthPerItem, height: widthPerItem)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return self.sectionInsets
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return self.sectionInsets.left
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if self.collectionView.collectionViewLayout is FullCollectionViewLayout {
+            return
+        }
+        self.collectionView.setCollectionViewLayout(FullCollectionViewLayout(), animated: true) { [unowned self] (finished) in
+            if finished {
+                self.collectionView.isPagingEnabled = true
+                self.collectionView.bounces = false
+                self.collectionView.backgroundColor = .black
+                self.collectionView.reloadData()
+                let leftMenuItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(self.backToGrid));
+                self.navigationItem.setLeftBarButton(leftMenuItem, animated: false);
+            }
+        }
     }
     
 }
