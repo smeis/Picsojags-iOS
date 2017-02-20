@@ -146,6 +146,32 @@ extension PhotoViewController {
     
     }
     
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        
+        self.collectionView.collectionViewLayout.invalidateLayout()
+        
+        // Only modify behavior when changing orientation in full view
+        if !(self.collectionView.collectionViewLayout is FullCollectionViewLayout) {
+            return
+        }
+        
+        self.collectionView.alpha = 0 // Hide flickering
+        
+        let currentOffset = self.collectionView.contentOffset
+        let currentIndex = currentOffset.x / self.collectionView.frame.size.width
+        
+        coordinator.animate(alongsideTransition: { (context) in
+        }) { (context) in // Complete
+           let currentSize = self.collectionView.bounds.size
+           let offset = currentIndex * currentSize.width
+           self.collectionView.contentOffset = CGPoint(x: offset, y: 0)
+            
+            UIView.animate(withDuration: 0.2, animations: { 
+                self.collectionView.alpha = 1
+            })
+        }
+    }
+    
 }
 
 // MARK: - Refreshing and endless scrolling

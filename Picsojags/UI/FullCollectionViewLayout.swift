@@ -40,7 +40,7 @@ class FullCollectionViewLayout: UICollectionViewFlowLayout {
     }
     
     override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
-        return true
+        return false
     }
 
     
