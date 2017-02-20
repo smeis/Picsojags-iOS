@@ -12,7 +12,6 @@ import SwiftyJSON
 // MARK: - String extension for parameter escaping
 
 extension String {
-    
     var RFC3986UnreservedEncoded:String {
         let unreservedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~"
         let unreservedCharsSet: CharacterSet = CharacterSet(charactersIn: unreservedChars)
@@ -38,7 +37,6 @@ struct PhotoBackendResponse: Equatable {
     fileprivate(set) var pages: Int
     fileprivate(set) var photos: [Photo]
 }
-
 
 func ==(lhs: PhotoBackendResponse, rhs: PhotoBackendResponse) -> Bool {
     if lhs.success != rhs.success { return false }
@@ -83,7 +81,7 @@ struct PhotoBackend500px: PhotoBackend {
 
         // Compose URL, maybe use NSURLComponents
         let searchURL = self.baseURL.appendingPathComponent("photos/search")
-        let parameters = ["term=\(escapedKeywords)", "page=\(page)", "consumer_key=\(self.apiKey)", "image_size=3,6"]
+        let parameters = ["term=\(escapedKeywords)", "page=\(page)", "consumer_key=\(self.apiKey)", "image_size=3,6", "rpp=100"]
         let parameterString = parameters.joined(separator: "&")
         return URL(string: "\(searchURL.absoluteString)?\(parameterString)")
     }
@@ -106,7 +104,7 @@ struct PhotoBackend500px: PhotoBackend {
             }
             // Create photo
             if let smallURL = URL(string: smallJSON["https_url"].stringValue), let largeURL = URL(string: largeJSON["https_url"].stringValue) {
-                let parsedPhoto = Photo(lowQualityURL: smallURL, highQualityURL: largeURL)
+                let parsedPhoto = Photo(squaredPhotoURL: smallURL, fullPhotoURL: largeURL)
                 parsedPhotos.append(parsedPhoto)
             }
         }

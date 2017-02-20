@@ -10,11 +10,11 @@ import UIKit
 
 struct Photo: Equatable {
     
-    fileprivate(set) var lowQualityURL: URL
-    fileprivate(set) var highQualityURL: URL
+    fileprivate(set) var squaredPhotoURL: URL
+    fileprivate(set) var fullPhotoURL: URL
 
 }
 
 func ==(lhs: Photo, rhs: Photo) -> Bool {
-    return lhs.lowQualityURL == rhs.lowQualityURL && lhs.highQualityURL == rhs.highQualityURL
+    return lhs.squaredPhotoURL == rhs.squaredPhotoURL && lhs.fullPhotoURL == rhs.fullPhotoURL
 }

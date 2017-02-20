@@ -7,13 +7,18 @@
 //
 
 import UIKit
+import Kingfisher
 
 class GridViewController: UIViewController {
 
     @IBOutlet weak var gridCollectionView: UICollectionView!
     
     var photoStore: PhotoStore?
-    var photos: [Photo] = []
+    
+    fileprivate var photos: [Photo] = []
+    
+    fileprivate let itemsPerRow: CGFloat = 3
+    fileprivate let sectionInsets = UIEdgeInsets(top: 16.0, left: 16.0, bottom: 16.0, right: 16.0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,8 +74,32 @@ extension GridViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! PhotoCollectionViewCell
+        let photo = self.photos[indexPath.row]
+        cell.imageView.kf.setImage(with: photo.squaredPhotoURL)
         return cell
+    }
+    
+}
+
+// MARK: - Flow layout
+
+extension GridViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let paddingSpace = self.sectionInsets.left * (self.itemsPerRow + 1)
+        let availableWidth = self.view.frame.width - paddingSpace
+        let widthPerItem = floor(availableWidth / self.itemsPerRow)
+        
+        return CGSize(width: widthPerItem, height: widthPerItem)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return self.sectionInsets
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return self.sectionInsets.left
     }
     
 }
