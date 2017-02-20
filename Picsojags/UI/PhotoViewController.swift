@@ -24,6 +24,9 @@ class PhotoViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
+        // Setup collectionview
+        self.collectionView.collectionViewLayout = GridCollectionViewLayout()
+        
         // WARN: This allows me to hide the API key from git and upload this project to GitHub, not suited for real world apps
         if let path = Bundle.main.path(forResource: "PhotoServices", ofType: "plist"), let dict = NSDictionary(contentsOfFile: path) as? [String: AnyObject] {
             // Use the 500px backend
@@ -47,14 +50,13 @@ class PhotoViewController: UIViewController {
         self.collectionView.addSubview(refreshControl)
         self.collectionView.alwaysBounceVertical = true
         
-        // Setup collectionview
-        self.collectionView.collectionViewLayout.invalidateLayout()
-        self.collectionView.collectionViewLayout = GridCollectionViewLayout()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+        
+        // Kingfisher empties its cache automatically when we receive a warning
     }
     
 
@@ -179,6 +181,7 @@ extension PhotoViewController: UICollectionViewDelegate {
                 self.collectionView.bounces = false
                 self.collectionView.backgroundColor = .black
                 self.collectionView.reloadData()
+                self.collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .centeredHorizontally)
                 let leftMenuItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(self.backToGrid));
                 self.navigationItem.setLeftBarButton(leftMenuItem, animated: false);
             }
